@@ -1,7 +1,9 @@
 Sub Stock()
 
+'For loop to iterate across sheets
 For Each ws In Worksheets
 
+'Variables
 Dim WorksheetName As String
 WorksheetName = ws.Name
 lastrow = ws.Cells(Rows.Count, 1).End(xlUp).Row
@@ -12,15 +14,16 @@ Dim Closing_Price As Double
 Dim Yearly_Change As Double
 Dim Total As Double
 Total = 0
-
 Opening_Price = ws.Cells(2, 3)
-Total = 0
+
+'Summary Table Headers
 ws.Range("I1").EntireColumn.Insert
 ws.Cells(1, 9) = "Ticker"
 ws.Cells(1, 10) = "Yearly Change"
 ws.Cells(1, 11) = "Percent Change"
 ws.Cells(1, 12) = "Total Stock Volume"
 
+'To get values for the Summary Table
 For i = 2 To lastrow
 
     If ws.Cells(i, 1) <> ws.Cells(i + 1, 1) Then
@@ -46,6 +49,7 @@ For i = 2 To lastrow
     
     Next i
     
+    'Conditional Formatting
     For x = 2 To lastrow
     If ws.Cells(x, 11) > 0 Then
     ws.Cells(x, 11).Interior.ColorIndex = 4
@@ -61,6 +65,7 @@ For i = 2 To lastrow
     ws.Cells(3, 15) = "Greatest % Decrease"
     ws.Cells(4, 15) = "Greatest Total Volume"
     
+    'Iteration to find the  Greatest % Increase, Greatest % Decrease and Greatest Total Volume
     For j = 2 To lastrow
     
     If ws.Cells(j, 11) = Application.WorksheetFunction.Max(ws.Range("K2:K" & lastrow)) Then
